@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app        # <- live sync code changes into container
+      - /app/node_modules  # <- avoid overwriting with host's node_modules
+    command: npm run dev
