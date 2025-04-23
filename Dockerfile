@@ -33,3 +33,7 @@ EXPOSE 3000
 
 # Start the Next.js app
 CMD ["npm", "start"]
+
+# Start up commands
+# docker build -t phansite .
+# docker run -p 3000:3000 phansite
