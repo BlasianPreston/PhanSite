@@ -1,0 +1,16 @@
+# Development Dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json* ./
+
+RUN npm install
+
+# Copy everything else (but since you will mount code during docker-compose, it's optional)
+COPY . .
+
+EXPOSE 3000
+
+# Start dev server (not production server)
+CMD ["npm", "run", "dev"]
