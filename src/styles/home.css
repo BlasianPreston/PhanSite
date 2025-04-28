@@ -1,0 +1,16 @@
+nav {
+    background-color: #C9211E;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.logo {
+    width: 5%;
+    height: auto;
+}
+.account-pages {
+    display: flex;
+    gap: 0.5rem;
+}

@@ -1,15 +1,15 @@
 import React from 'react';
-import 'styles/footer.css'
+import '../styles/footer.css'
 
 export default function Footer() {
     return (
-        <div>
-            <div>
-                <h2>The Phantom Thieves Fan Site</h2>
-                <h4>Saving the World in the Metaverse</h4>
-                <h5>Supported by Yuuki Mishima</h5>
+        <div className='footer'>
+            <div className='footer-left'>
+                <h3>The Phantom Thieves Fan Site</h3>
+                <h3>Saving the World in the Metaverse</h3>
+                <h3>Supported by Yuuki Mishima</h3>
             </div>
-            <div>
+            <div className='footer-right'>
                 <h3>Based on Hit Game Persona 5</h3>
                 <h3>Original Work of Atlus and Sega</h3>
                 <h3>Website Created by Preston Williams</h3>

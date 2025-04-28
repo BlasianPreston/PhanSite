@@ -1,0 +1,18 @@
+.footer {
+    background-color: #C9211E;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 15px;
+    padding: 1rem;
+}
+.footer h3{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.footer-left {
+    text-align: left;
+}
+.footer-right {
+    text-align: right;
+}
