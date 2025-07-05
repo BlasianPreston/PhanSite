@@ -1,0 +1,51 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #171717;
+    text-shadow: 1px 1px 2px #fff8, 0 0 2px #0004;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: rgba(255,255,255,0.85);
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px 0 #0002;
+    min-width: 320px;
+}
+
+.App input[type="text"],
+.App input[type="email"],
+.App input[type="password"] {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.App input[type="submit"] {
+    background-color: #a1eafb;
+    color: #171717;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.App input[type="submit"]:hover {
+    background-color: #7fd8e7;
+}
