@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import '../../styles/signin.css';
 
 export default function Signup() {
@@ -11,6 +12,7 @@ export default function Signup() {
                 <input type="password" placeholder="Password" />
                 <input type="password" placeholder="Confirm Password" />
                 <input type="submit" value="Register" style={{ backgroundColor: "#a1eafb" }} />
+                <Link href='/'><p className="back">Back</p></Link>
             </form>
         </div>
     )

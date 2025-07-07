@@ -10,7 +10,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1.5rem;
-    color: #171717;
+    color: white;
     text-shadow: 1px 1px 2px #fff8, 0 0 2px #0004;
 }
 
@@ -48,4 +48,17 @@
 
 .App input[type="submit"]:hover {
     background-color: #7fd8e7;
+}
+
+.back {
+    background-color: red;
+    color: #171717;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: center;
 }
