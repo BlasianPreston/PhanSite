@@ -10,7 +10,7 @@ export default function Signinheader() {
                 <Link href='/'><Image src={SLogo} alt='Phantom Thieves Logo' className='logo'></Image></Link>
                 <div className='account-pages'>
                     <Link href='/signin'><h3>Log In</h3></Link>
-                    <Link href='/signup'><h3>Sign In</h3></Link>
+                    <Link href='/signup'><h3>Sign Up</h3></Link>
                 </div>    
             </nav>
     )
