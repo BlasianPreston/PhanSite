@@ -7,7 +7,7 @@ export default function Posts() {
     return (
         <div className='page'>
             <h1 className='title'>Posts</h1>
-            <PostCard title="Phantom Thieves" image={Logo} description="Sample Description" user="User"/>
+            <div className='grid'><PostCard title="Phantom Thieves" image={Logo} description="Sample Description" user="User"/></div>
         </div>
     )
 }

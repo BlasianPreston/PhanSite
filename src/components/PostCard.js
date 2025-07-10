@@ -6,7 +6,7 @@ export default function PostCard(props) {
     return (
         <div className='card'>
             <h1>{props.title}</h1>
-            <Image src={props.image} alt ='Phantom Thieves Logo'/>
+            <div className='image'><Image src={props.image} alt ='Phantom Thieves Logo'/></div>
             <h3>{props.description}</h3>
             <h4>Made by: {props.user}</h4>
         </div>
