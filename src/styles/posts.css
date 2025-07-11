@@ -1,15 +1,14 @@
-.page {
+.text {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
 }
 
 .title {
-    padding: 1rem 1rem 0.5rem 1rem;
+    padding: 0.25rem 1rem 0.5rem 1rem;
     text-align: center;
-    margin-bottom: 1rem;
     color: white;
     text-shadow: 1px 1px 2px #fff8, 0 0 2px #0004;
 }

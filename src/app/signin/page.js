@@ -12,7 +12,7 @@ export default function SignIn() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle authentication logic in the future
-        router.push('/posts');
+        router.push('/allposts');
     };
 
     return(
