@@ -9,6 +9,7 @@ export default function Postsheader() {
             <nav>
                 <Link href='/allposts'><Image src={SLogo} alt='Phantom Thieves Logo' className='logo'></Image></Link>
                 <div className='account-pages'>
+                    <Link href='/create'><h3>Create Posts</h3></Link>
                     <Link href='/allposts'><h3>All Posts</h3></Link>
                     <Link href='/myposts'><h3>My Posts</h3></Link>
                 </div>    
