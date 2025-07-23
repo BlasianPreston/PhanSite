@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '../supabase.js'
 import Link from 'next/link';
 import Header from '../../components/PostsHeader.js'
 import Footer from '../../components/Footer.js'
@@ -12,14 +13,7 @@ export default function Create() {
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
-    const [imagePreview, setImagePreview] = useState(null);
     const router = useRouter();
-    
-    const handleImageChange = (e) => {
-        const value = e.target.value;
-        setImage(value);
-        setImagePreview(value);
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -48,6 +42,24 @@ export default function Create() {
         }
       }
 
+    async function getMedia() {
+
+        const { data, error } = await supabase.storage.from('uploads').list(userId + '/', {
+        limit: 10,
+        offset: 0,
+        sortBy: {
+            column: 'name', order:
+            'asc'
+        }
+        });
+
+        if (data) {
+        setMedia(data);
+        } else {
+        console.log(71, error);
+        }
+    }
+
     return (
         <div>
             <Header />
@@ -68,32 +80,13 @@ export default function Create() {
                         </div>
 
                         <div className="form-section">
-                            <label className="form-label">Image URL</label>
+                            <label className="form-label">Image</label>
                             <input 
-                                type="url" 
-                                placeholder='https://example.com/image.jpg'
+                                type="file" 
                                 value={image}
-                                onChange={handleImageChange}
-                                className="form-input"
+                                onSubmit={(e) => uploadImage(e)}
                             />
                         </div>
-
-                        {imagePreview && (
-                            <div className="image-preview">
-                                <label className="form-label">Preview</label>
-                                <img 
-                                    src={imagePreview} 
-                                    alt="Preview" 
-                                    onError={(e) => {
-                                        e.target.style.display = 'none';
-                                        e.target.nextSibling.style.display = 'block';
-                                    }}
-                                />
-                                <div className="image-error" style={{display: 'none'}}>
-                                    Invalid image URL
-                                </div>
-                            </div>
-                        )}
 
                         <div className="form-section">
                             <label className="form-label">Description</label>
