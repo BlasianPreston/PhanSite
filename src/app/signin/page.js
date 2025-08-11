@@ -5,28 +5,39 @@ import { useRouter } from 'next/navigation';
 import '../../styles/signin.css';
 
 export default function SignIn() {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle authentication logic in the future
-        router.push('/allposts');
+        const res = await fetch("/signin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+            credentials: "include"
+        });
+        if (res.ok) {
+            alert("Logged in");
+            router.push("/allposts");
+        }
+        else {
+            alert("Login failed");
+        }
     };
 
-    return(
+    return (
         <div className='page'>
             <p className="title">Sign In</p>
             <form className="App" onSubmit={handleSubmit}>
-                <input 
-                    type="email" 
-                    placeholder='Email'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)} // Add required attributes
+                <input
+                    type="text"
+                    placeholder='Username'
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
-                <input 
-                    type="password" 
+                <input
+                    type="password"
                     placeholder='Password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}

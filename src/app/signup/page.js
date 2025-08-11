@@ -11,40 +11,51 @@ export default function Signup() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const router = useRouter();
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Here you would typically handle registration logic
-        // For now, we'll just redirect to posts page
-        router.push('/posts');
+        const res = await fetch("/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, email, password, confirmPassword }),
+            credentials: "include"
+        });
+        if (res.ok) {
+            alert("Account created!");
+            router.push("/allposts");
+        }
+        else {
+            alert("Account creation failed!");
+        }
     };
 
-    return(
+    return (
         <div className='page'>
             <p className="title">Sign Up</p>
             <form className="App" onSubmit={handleSubmit}>
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                 />
-                <input 
-                    type="email" 
+                <input
+                    type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
-                <input 
-                    type="password" 
+                <input
+                    type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <input 
-                    type="password" 
+                <input
+                    type="password"
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}

@@ -2,63 +2,69 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '../supabase.js'
+import { supabase } from '../backend/supabase.js'
 import Link from 'next/link';
 import Header from '../../components/PostsHeader.js'
 import Footer from '../../components/Footer.js'
-import { v4 as uuidv4 } from 'uuid';
 import '../../styles/create.css';
 
 export default function Create() {
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // Simple form validation
-        if (!title.trim() || !description.trim() || !image.trim()) {
+        if (!title.trim() || !description.trim() || !image) {
             alert('Please fill in all fields');
             return;
         }
-        router.push('/allposts');
+        setLoading(true);
+
+        try {
+            const fileName = `${Date.now()}-${image.name}`;
+            const { data: storageData, error: storageError } = await supabase.storage.from("images").upload(fileName, image);
+
+            if (storageError) throw storageError;
+
+            const { data: publicUrlData } = supabase.storage.from("images").getPublicUrl(fileName);
+
+            const imageUrl = publicUrlData.publicUrl;
+
+            const postData = {
+                title, description, image_url: imageUrl
+            }
+
+            const res = await fetch("/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(postData),
+                credentials: "include"
+            });
+            if (res.ok) {
+                alert("Post successfully uploaded!");
+                router.push("/allposts");
+            }
+            else {
+                const errMsg = await res.text();
+                alert(`Error: ${errMsg}`);
+            }
+
+            alert("Upload successful");
+            setTitle("");
+            setImage("");
+            setDescription("");
+        } catch (err) {
+            console.log(error)
+            alert("Error uploading post");
+        } finally {
+            setLoading(false);
+            router.push('/allposts');
+        }
     };
-
-    async function uploadImage(e) {
-        let file = e.target.files[0];
-    
-    
-        const { data, error } = await supabase
-          .storage
-          .from('uploads')
-          .upload(userId + "/" + uuidv4(), file)
-    
-        if (data) {
-          getMedia();
-    
-        } else {
-          console.log(error);
-        }
-      }
-
-    async function getMedia() {
-
-        const { data, error } = await supabase.storage.from('uploads').list(userId + '/', {
-        limit: 10,
-        offset: 0,
-        sortBy: {
-            column: 'name', order:
-            'asc'
-        }
-        });
-
-        if (data) {
-        setMedia(data);
-        } else {
-        console.log(71, error);
-        }
-    }
 
     return (
         <div>
@@ -66,12 +72,12 @@ export default function Create() {
             <div className='page'>
                 <div className='text'>
                     <h1 className='title'>Create Your Post</h1>
-                    
+
                     <form className="App" onSubmit={handleSubmit}>
                         <div className="form-section">
                             <label className="form-label">Title</label>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 placeholder='Enter your post title'
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
@@ -81,10 +87,9 @@ export default function Create() {
 
                         <div className="form-section">
                             <label className="form-label">Image</label>
-                            <input 
-                                type="file" 
-                                value={image}
-                                onSubmit={(e) => uploadImage(e)}
+                            <input
+                                type="file"
+                                onChange={(e) => setImage(e.target.files[0])}
                             />
                         </div>
 
@@ -100,8 +105,8 @@ export default function Create() {
                         </div>
 
                         <div className='buttons'>
-                            <button type="submit" className="submit-btn">
-                                Create Post
+                            <button type="submit" disabled={loading} className="submit-btn">
+                                {loading ? "Uploading..." : "Submit"}
                             </button>
                             <Link href='/allposts' className="back-btn">
                                 Cancel
