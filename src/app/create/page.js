@@ -2,11 +2,16 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '../backend/supabase.js'
+import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import Header from '../../components/PostsHeader.js'
 import Footer from '../../components/Footer.js'
 import '../../styles/create.css';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function Create() {
     const [title, setTitle] = useState("");
@@ -38,31 +43,29 @@ export default function Create() {
                 title, description, image_url: imageUrl
             }
 
-            const res = await fetch("/create", {
+            const res = await fetch("/api/create", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(postData),
                 credentials: "include"
             });
+            
+            const data = await res.json();
+            
             if (res.ok) {
                 alert("Post successfully uploaded!");
+                setTitle("");
+                setImage("");
+                setDescription("");
                 router.push("/allposts");
+            } else {
+                alert(`Error: ${data.error || "Failed to create post"}`);
+                setLoading(false);
             }
-            else {
-                const errMsg = await res.text();
-                alert(`Error: ${errMsg}`);
-            }
-
-            alert("Upload successful");
-            setTitle("");
-            setImage("");
-            setDescription("");
-        } catch (err) {
-            console.log(error)
+        } catch (error) {
+            console.log(error);
             alert("Error uploading post");
-        } finally {
             setLoading(false);
-            router.push('/allposts');
         }
     };
 

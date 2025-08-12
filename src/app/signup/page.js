@@ -14,18 +14,25 @@ export default function Signup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await fetch("/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, password, confirmPassword }),
-            credentials: "include"
-        });
-        if (res.ok) {
-            alert("Account created!");
-            router.push("/allposts");
-        }
-        else {
-            alert("Account creation failed!");
+        try {
+            const res = await fetch("/api/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password, confirmPassword }),
+                credentials: "include"
+            });
+            
+            const data = await res.json();
+            
+            if (res.ok) {
+                alert("Account created!");
+                router.push("/allposts");
+            } else {
+                alert(data.error || "Account creation failed!");
+            }
+        } catch (error) {
+            console.error("Signup error:", error);
+            alert("An error occurred during signup");
         }
     };
 

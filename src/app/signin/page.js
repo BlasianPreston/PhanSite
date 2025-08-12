@@ -11,18 +11,25 @@ export default function SignIn() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await fetch("/signin", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password }),
-            credentials: "include"
-        });
-        if (res.ok) {
-            alert("Logged in");
-            router.push("/allposts");
-        }
-        else {
-            alert("Login failed");
+        try {
+            const res = await fetch("/api/signin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+                credentials: "include"
+            });
+            
+            const data = await res.json();
+            
+            if (res.ok) {
+                alert("Logged in");
+                router.push("/allposts");
+            } else {
+                alert(data.error || "Login failed");
+            }
+        } catch (error) {
+            console.error("Signin error:", error);
+            alert("An error occurred during signin");
         }
     };
 
