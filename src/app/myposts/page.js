@@ -44,7 +44,7 @@ export default function Allposts() {
         <div className='page'>
             <Header />
             <div className='text'>
-                <h1 className='title'>All Posts</h1>
+                <h1 className='title'>My Posts</h1>
                 <div className='posts-grid'>
                     {postsList.map((post, index) => (
                         <div key={`${post.user}-${post.created_at}-${index}`}>
